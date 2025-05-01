@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Signup - Syntax Error</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+
+    header, footer {
+      margin-bottom: 10px;
+    }
+
+    form {
+      background: white;
+      display: inline-block;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 350px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin: 6px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 10px;
+      width: 100%;
+      background-color: #007BFF;
+      border: none;
+      color: white;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #007BFF;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>Syntax Error 🚀</h2>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="login.html">Login</a>
+      <a href="signup.html">Signup</a>
+    </nav>
+  </header>
+
+  <form id="signupForm">
+    <h3>Signup</h3>
+
+    <input type="text" id="name" name="name" placeholder="Name" required />
+
+    <input type="email" id="email" name="email" placeholder="Email" required />
+
+    <input type="password" id="password" name="password" placeholder="Password" required />
+
+    <select id="role" name="role" required>
+      <option value="" disabled selected>Select Role</option>
+      <option value="Student">Student</option>
+      <option value="Company">Company</option>
+    </select>
+
+    <button type="submit">Signup</button>
+  </form>
+
+  <footer>
+    <p>&copy; 2025 Syntax Error</p>
+  </footer>
+
+  <script>
+    const signupForm = document.getElementById('signupForm');
+
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = signupForm.name.value;
+      const email = signupForm.email.value;
+      const password = signupForm.password.value;
+      const role = signupForm.role.value;
+
+      try {
+        const response = await fetch('http://localhost:5000/api/auth/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ name, email, password, role })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          alert('✅ Signup successful!');
+          window.location.href = 'login.html';
+        } else {
+          alert('❌ Signup failed: ' + data.message);
+        }
+      } catch (err) {
+        alert('❌ Network error: ' + err.message);
+      }
+    });
+  </script>
+</body>
+</html>
